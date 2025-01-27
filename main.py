@@ -28,6 +28,8 @@ def start(message: types.Message):
     bot.register_next_step_handler(message, handle_value)  # запуск следующего обработчика
 
 
+
+
 @bot.message_handler()
 def handle_value(message: types.Message):
     global value

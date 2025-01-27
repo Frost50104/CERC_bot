@@ -1,0 +1,16 @@
+1. Создать основной файл (main.py)
+2. Создать файл config.py и не включать его в git
+3. Создать файл для текста help команды
+4. Скачать pyTelegramBotAPI (pip install pyTelegramBotAPI)
+5. Зафиксировать зависимости (pip freeze > requirements.txt)
+6. Создать бота в @BotFather и добавить TOKEN в config.py
+7. Импортировать в main.py:
+        from telebot import TeleBot
+        from telebot import types
+        import config
+        import help_message
+8. Создать объект класса TeleBot, т.е. самого бота (bot = TeleBot(config.TOKEN))
+9. Добавить long polling в конец main.py:
+        if __name__ == '__main__':
+            bot.infinity_polling(skip_pending=True)
+10. Добавить нужные обработчки

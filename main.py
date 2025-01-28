@@ -1,3 +1,5 @@
+# в случае ошибки ввода - не возвращается к повторному запросу
+
 from telebot import TeleBot
 from telebot import types
 from io import StringIO
@@ -35,7 +37,7 @@ def handle_value(message: types.Message):
     global value
     try:
         # Пробуем преобразовать сообщение в целое число
-        value = int(message.text)
+        value = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Меняем {value} руб"
@@ -58,7 +60,7 @@ def handle_cifra(message: types.Message):
     global exchange_cifra
     try:
         # Пробуем преобразовать сообщение в целое число
-        exchange_cifra = int(message.text)
+        exchange_cifra = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Курс в Цифре: {exchange_cifra} евро"
@@ -81,7 +83,7 @@ def handle_usdt_bybit(message: types.Message):
     global exchange_bybit_usdt
     try:
         # Пробуем преобразовать сообщение в целое число
-        exchange_bybit_usdt = int(message.text)
+        exchange_bybit_usdt = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Курс USDT: {exchange_bybit_usdt} руб"
@@ -104,7 +106,7 @@ def handle_kzt_bybit(message: types.Message):
     global exchange_bybit_kzt
     try:
         # Пробуем преобразовать сообщение в целое число
-        exchange_bybit_kzt = int(message.text)
+        exchange_bybit_kzt = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Курс KZT: {exchange_bybit_kzt} USDT"
@@ -127,7 +129,7 @@ def handle_eur_ff(message: types.Message):
     global exchange_eur_ff
     try:
         # Пробуем преобразовать сообщение в целое число
-        exchange_eur_ff = int(message.text)
+        exchange_eur_ff = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Курс EUR: {exchange_eur_ff} KZT"
@@ -150,7 +152,7 @@ def handle_man(message: types.Message):
     global exchange_man
     try:
         # Пробуем преобразовать сообщение в целое число
-        exchange_man = int(message.text)
+        exchange_man = float(message.text)
         bot.send_message(
             chat_id=message.chat.id,
             text=f"Курс EUR у менялы: {exchange_man} RUB"
@@ -173,11 +175,11 @@ def handle_man(message: types.Message):
 Курс EUR: {exchange_eur_ff}
 Курс EUR у менялы: {exchange_man}
         
-Выход в евро Цифра: {(value-value*0.009)/exchange_cifra}
-Курс Цифра: {value/((value-value*0.009)/exchange_cifra)}
+Выход в евро Цифра: {round((value-value*0.009)/exchange_cifra, 2)}
+Курс Цифра: {round(value/((value-value*0.009)/exchange_cifra), 2)}
 
-Выход в евро наличные через цифру: {((value-value*0.009)/exchange_cifra)-(((value-value*0.009)/exchange_cifra)*0.02+3+5)}
-Курс наличных через цифру: {value/(((value-value*0.009)/exchange_cifra)-(((value-value*0.009)/exchange_cifra)*0.02+3+5))}
+Выход в евро наличные через цифру: {round(((value-value*0.009)/exchange_cifra)-(((value-value*0.009)/exchange_cifra)*0.02+3+5), 2)}
+Курс наличных через цифру: {round(value/(((value-value*0.009)/exchange_cifra)-(((value-value*0.009)/exchange_cifra)*0.02+3+5)), 2)}
         
 Выход евро через крипту: 
 Курс Крипта:

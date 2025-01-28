@@ -4,6 +4,7 @@ from telebot import TeleBot
 from telebot import types
 from io import StringIO
 from datetime import datetime
+import requests
 
 import config
 import help_message
@@ -190,6 +191,21 @@ def fix(message: types.Message):
     bot.send_message(
         chat_id=message.chat.id,
         text='Результа зафиксирован в чате\nВведите /start, чтобы начать заново.'
+    )
+
+#  Возвращает курс EUR к RUB по API
+@bot.message_handler(commands=['api'])
+def get_eur_to_rub_ratio(message: types.Message):
+    from_currency = 'eur'
+    to_currency = 'rub'
+    response = requests.get(config.API_EXCHANGE_RATE)
+    if response.status_code != 200:
+        ratio_result = -1
+    json_data = response.json()
+    ratio_result = json_data[from_currency][to_currency]
+    bot.send_message(
+        chat_id=message.chat.id,
+        text=f'Примерный курс евро: {ratio_result}'
     )
 
 
